@@ -1,25 +1,30 @@
 <!DOCTYPE html>
-<html lang="ko" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cocurate: 회사 및 역할 소개</title>
+    <title>Cocurate: Company & Role Introduction</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Warm Neutrals & Subtle Accent (Beige, Slate, Muted Teal) -->
-    <!-- Application Structure Plan: The application uses a single-page, scrolling narrative structure with a sticky navigation bar. This design transforms the linear presentation into an explorable journey. It starts with a compelling "Problem/Solution" section, details the candidate's specific "Role & Support," provides an interactive "Compensation Calculator" for tangible engagement, and finishes with "Culture" and a call to action. This structure is chosen because it logically flows for a sales candidate, prioritizing what they need to know (the opportunity, their role, their reward) while allowing them to navigate freely. The interactive calculator is the centerpiece, designed to make the compensation model exciting and concrete. -->
+    <!-- Application Structure Plan: The application uses a single-page, scrolling narrative structure with a sticky navigation bar and a language switcher. This design transforms the linear presentation into an explorable journey. It starts with a compelling "Problem/Solution" section, details the candidate's specific "Role & Support," provides an interactive "Compensation Calculator" for tangible engagement, and finishes with "Culture" and a call to action. This structure is chosen because it logically flows for a sales candidate, prioritizing what they need to know (the opportunity, their role, their reward) while allowing them to navigate freely. The interactive calculator is the centerpiece, designed to make the compensation model exciting and concrete. -->
     <!-- Visualization & Content Choices: 
-        - The Problem (우리가 해결하는 문제): Goal: Inform. Method: Four interactive cards (HTML/Tailwind) with hover effects. Justification: More visually engaging than a simple list. An added expandable section now details the "tender" process for deeper context.
-        - The Role (당신의 역할): Goal: Organize. Method: Styled list with Unicode icons. Justification: Icons provide quick visual context and improve readability.
-        - Compensation (당신의 성공, 당신의 보상): Goal: Engage/Compare. Method: An interactive commission calculator (HTML/JS) paired with a dynamic bar chart (Chart.js/Canvas). Interaction: User inputs a contract value, and the calculator and chart update in real-time to show the 15% commission. Justification: This is the most critical interactive element. It makes the abstract earning potential tangible, personal, and exciting, which is far more powerful than a static example for a sales candidate. The chart provides instant visual context for the calculated amount. Library: Chart.js.
-        - Culture (우리가 일하는 방식): Goal: Inform. Method: A grid of styled cards with icons. Justification: Clean, modern, and easily digestible format for core values.
+        - The Problem: Goal: Inform. Method: Four interactive cards (HTML/Tailwind) with hover effects. Justification: More visually engaging than a simple list. An added expandable section now details the "tender" process for deeper context.
+        - The Role: Goal: Organize. Method: Styled list with Unicode icons. Justification: Icons provide quick visual context and improve readability.
+        - Compensation: Goal: Engage/Compare. Method: An interactive commission calculator (HTML/JS) paired with a dynamic bar chart (Chart.js/Canvas). Interaction: User inputs a contract value, and the calculator and chart update in real-time to show the 15% commission. Justification: This is the most critical interactive element. It makes the abstract earning potential tangible, personal, and exciting, which is far more powerful than a static example for a sales candidate. The chart provides instant visual context for the calculated amount. Library: Chart.js.
+        - Culture: Goal: Inform. Method: A grid of styled cards with icons. Justification: Clean, modern, and easily digestible format for core values.
         - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
-        body {
+        :lang(ko) {
             font-family: 'Noto Sans KR', sans-serif;
+        }
+        :lang(en) {
+            font-family: 'Inter', sans-serif;
+        }
+        body {
             background-color: #FDFBF8; /* Warm off-white */
             color: #334155; /* Slate 700 */
         }
@@ -41,7 +46,7 @@
             transition: color 0.3s ease;
         }
         .nav-link.active {
-            color: #09c2c2; /* Teal 500 */
+            color: #14B8A6; /* Teal 500 */
             font-weight: 500;
         }
         .card-hover {
@@ -69,90 +74,96 @@
     <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-slate-800">Cocurate</h1>
-            <div class="hidden md:flex space-x-8">
-                <a href="#opportunity" class="nav-link text-slate-600 hover:text-teal-500">기회</a>
-                <a href="#role" class="nav-link text-slate-600 hover:text-teal-500">당신의 역할</a>
-                <a href="#reward" class="nav-link text-slate-600 hover:text-teal-500">보상</a>
-                <a href="#culture" class="nav-link text-slate-600 hover:text-teal-500">문화</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a data-key="navOpportunity" href="#opportunity" class="nav-link text-slate-600 hover:text-teal-500">The Opportunity</a>
+                <a data-key="navRole" href="#role" class="nav-link text-slate-600 hover:text-teal-500">Your Role</a>
+                <a data-key="navReward" href="#reward" class="nav-link text-slate-600 hover:text-teal-500">Your Reward</a>
+                <a data-key="navCulture" href="#culture" class="nav-link text-slate-600 hover:text-teal-500">Our Culture</a>
             </div>
-            <a href="#contact" class="hidden md:block bg-teal-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-teal-600 transition-colors">지원하기</a>
+            <div class="flex items-center">
+                <div class="flex items-center space-x-2 border-l border-slate-200 ml-6 pl-6">
+                    <button id="lang-en" class="text-sm font-medium p-1 rounded-md">EN</button>
+                    <button id="lang-ko" class="text-sm font-medium p-1 rounded-md">KO</button>
+                </div>
+                <a data-key="applyNow" href="#contact" class="hidden md:block bg-teal-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-teal-600 transition-colors ml-6">Apply Now</a>
+            </div>
         </nav>
     </header>
 
     <main>
         <section id="hero" class="py-20 md:py-32 text-center bg-white">
             <div class="container mx-auto px-6">
-                <h2 class="text-4xl md:text-6xl font-bold text-slate-800 leading-tight">Cocurate에 오신 것을 환영합니다</h2>
-                <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">비즈니스가 승리하는 방식을 함께 혁신할 인재를 찾습니다.</p>
+                <h2 data-key="heroTitle" class="text-4xl md:text-6xl font-bold text-slate-800 leading-tight">Welcome to Cocurate</h2>
+                <p data-key="heroSubtitle" class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">We're looking for talent to help us revolutionize how businesses win.</p>
             </div>
         </section>
 
         <section id="opportunity" class="py-16 md:py-24">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h3 class="text-3xl md:text-4xl font-bold text-slate-800">기회: 시장의 문제를 해결합니다</h3>
-                    <p class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">많은 기업들이 제안서 및 입찰 과정에서 큰 어려움을 겪고 있습니다. 이것이 바로 우리가 해결하려는 문제입니다.</p>
+                    <h3 data-key="opportunityTitle" class="text-3xl md:text-4xl font-bold text-slate-800">The Opportunity: Solving a Market Problem</h3>
+                    <p data-key="opportunitySubtitle" class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">Many companies face significant challenges with proposals and tenders. This is the problem we're here to solve.</p>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div class="bg-white p-8 rounded-xl shadow-md card-hover">
                         <div class="text-3xl mb-4">⏱️</div>
-                        <h4 class="font-bold text-xl mb-2">시간 소모</h4>
-                        <p class="text-slate-600">수동 입찰 응답은 며칠 또는 몇 주가 걸릴 수 있습니다.</p>
+                        <h4 data-key="problem1Title" class="font-bold text-xl mb-2">Time-Consuming</h4>
+                        <p data-key="problem1Desc" class="text-slate-600">Manual tender responses can take days or even weeks.</p>
                     </div>
                     <div class="bg-white p-8 rounded-xl shadow-md card-hover">
                         <div class="text-3xl mb-4">🔄</div>
-                        <h4 class="font-bold text-xl mb-2">반복 작업</h4>
-                        <p class="text-slate-600">팀은 동일한 질문에 계속해서 답변해야 합니다.</p>
+                        <h4 data-key="problem2Title" class="font-bold text-xl mb-2">Repetitive Work</h4>
+                        <p data-key="problem2Desc" class="text-slate-600">Teams answer the same questions over and over again.</p>
                     </div>
                     <div class="bg-white p-8 rounded-xl shadow-md card-hover">
                         <div class="text-3xl mb-4">📉</div>
-                        <h4 class="font-bold text-xl mb-2">비일관성</h4>
-                        <p class="text-slate-600">제안서마다 품질과 메시지가 크게 다를 수 있습니다.</p>
+                        <h4 data-key="problem3Title" class="font-bold text-xl mb-2">Inconsistent Quality</h4>
+                        <p data-key="problem3Desc" class="text-slate-600">Proposal quality and messaging can vary wildly.</p>
                     </div>
                     <div class="bg-white p-8 rounded-xl shadow-md card-hover">
                         <div class="text-3xl mb-4">💸</div>
-                        <h4 class="font-bold text-xl mb-2">수익 손실</h4>
-                        <p class="text-slate-600">비효율적인 프로세스는 계약 실패로 이어집니다.</p>
+                        <h4 data-key="problem4Title" class="font-bold text-xl mb-2">Lost Revenue</h4>
+                        <p data-key="problem4Desc" class="text-slate-600">Inefficient processes lead to missed deals.</p>
                     </div>
                 </div>
 
                 <div class="mt-16 max-w-4xl mx-auto">
                     <details id="tender-details" class="bg-white rounded-xl shadow-md overflow-hidden">
                         <summary class="p-6 cursor-pointer flex justify-between items-center">
-                            <h4 class="text-xl font-bold text-slate-700">이 문제의 원인: '입찰(Tender)'이란 무엇일까요?</h4>
+                            <h4 data-key="tenderTitle" class="text-xl font-bold text-slate-700">What is a 'Tender'? The Root of the Problem</h4>
                             <span class="text-teal-500 text-2xl transform transition-transform duration-300 arrow">▼</span>
                         </summary>
                         <div class="details-content">
                             <div class="p-6 pt-0 text-slate-600">
-                                <p class="mb-4"><strong>입찰(Tender)</strong>은 정부나 대기업 같은 대규모 조직이 복잡하거나 값비싼 제품/서비스를 구매할 때 사용하는 공식적인 경쟁 프로세스입니다.</p>
-                                <p class="mb-6">예를 들어 정부가 새 다리를 건설하거나, 대형 병원이 새로운 IT 시스템을 필요로 할 때 특정 회사를 바로 선택하는 대신, 필요한 모든 것을 상세히 기술한 문서를 만듭니다. 이 문서가 바로 '입찰 초대장'입니다.</p>
+                                <p data-key="tenderDesc1" class="mb-4"></p>
+                                <p data-key="tenderDesc2" class="mb-6"></p>
                                 <div class="space-y-4 border-l-2 border-teal-200 pl-6">
                                     <div>
-                                        <h5 class="font-bold text-slate-800">1. 초대 (RFP/RFx)</h5>
-                                        <p>구매자(정부 기관, 대기업 등)가 공식적인 요청서(RFP: 제안 요청서)를 발행합니다. 이 문서는 기술적 요구사항, 프로젝트 범위, 마감일, 법적 조건 등을 명시하며 매우 길고 상세합니다.</p>
+                                        <h5 data-key="tenderStep1Title" class="font-bold text-slate-800"></h5>
+                                        <p data-key="tenderStep1Desc"></p>
                                     </div>
                                     <div>
-                                        <h5 class="font-bold text-slate-800">2. 제안 (입찰 응답)</h5>
-                                        <p>프로젝트를 수주하려는 공급업체들은 이 요청서에 대한 포괄적인 제안서를 준비해야 합니다. 이 제안서는 RFP의 모든 질문에 답변하고, 가격, 품질, 경험 면에서 자사가 최고의 선택임을 증명해야 합니다.</p>
+                                        <h5 data-key="tenderStep2Title" class="font-bold text-slate-800"></h5>
+                                        <p data-key="tenderStep2Desc"></p>
                                     </div>
                                     <div>
-                                        <h5 class="font-bold text-slate-800">3. 평가</h5>
-                                        <p>구매자는 마감일까지 모든 제안서를 수집하여 사전 정의된 기준에 따라 평가합니다. 단순히 가장 저렴한 가격이 아니라, 전반적으로 최고의 가치를 제공하는 제안을 선택합니다.</p>
+                                        <h5 data-key="tenderStep3Title" class="font-bold text-slate-800"></h5>
+                                        <p data-key="tenderStep3Desc"></p>
                                     </div>
                                     <div>
-                                        <h5 class="font-bold text-slate-800">4. 계약</h5>
-                                        <p>최종적으로 선정된 업체가 계약을 수주하게 됩니다.</p>
+                                        <h5 data-key="tenderStep4Title" class="font-bold text-slate-800"></h5>
+                                        <p data-key="tenderStep4Desc"></p>
                                     </div>
                                 </div>
-                                <p class="mt-6 font-semibold text-slate-700">이 과정이 바로 Cocurate가 해결하는 핵심적인 문제입니다. 저희는 이 복잡하고 시간 소모적인 과정을 자동화하여 고객이 더 중요한 전략에 집중하고, 더 많은 계약을 수주할 수 있도록 돕습니다.</p>
+                                <p data-key="tenderConclusion" class="mt-6 font-semibold text-slate-700"></p>
                             </div>
                         </div>
                     </details>
                 </div>
 
                 <div class="mt-12 text-center bg-teal-50 p-10 rounded-xl">
-                     <h3 class="text-2xl font-bold text-teal-800">Cocurate가 바로 해결책입니다.</h3>
-                     <p class="mt-4 text-lg text-teal-700 max-w-3xl mx-auto">Cocurate는 AI 기반 응답 도구와 지능형 콘텐츠 라이브러리를 통해 이 모든 문제를 해결합니다. 저희는 기업이 수백 시간을 절약하고 수주율을 크게 높일 수 있도록 돕습니다. 우리는 지루한 작업을 자동화하여 영업팀이 전략과 관계 구축에 집중할 수 있도록 합니다.</p>
+                     <h3 data-key="solutionTitle" class="text-2xl font-bold text-teal-800">Cocurate is the solution.</h3>
+                     <p data-key="solutionDesc" class="mt-4 text-lg text-teal-700 max-w-3xl mx-auto">Cocurate solves all these problems with an AI-powered response tool and an intelligent content library. We help companies save hundreds of hours and significantly increase their win rates by automating the tedious work.</p>
                 </div>
             </div>
         </section>
@@ -160,27 +171,27 @@
         <section id="role" class="py-16 md:py-24 bg-white">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h3 class="text-3xl md:text-4xl font-bold text-slate-800">당신의 역할: 비즈니스 개발 챔피언</h3>
-                    <p class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">당신의 미션은 Cocurate의 성장을 주도하는 것입니다. 당신은 미래 고객을 위한 Cocurate의 첫 번째 접점이자 얼굴이 될 것입니다.</p>
+                    <h3 data-key="roleTitle" class="text-3xl md:text-4xl font-bold text-slate-800">Your Role: Business Development Champion</h3>
+                    <p data-key="roleSubtitle" class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">Your mission is to drive Cocurate's growth. You will be the face of our company and the first point of contact for our future customers.</p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-12 items-start">
                     <div>
-                        <h4 class="text-2xl font-bold mb-6 text-slate-700">주요 책임</h4>
+                        <h4 data-key="responsibilitiesTitle" class="text-2xl font-bold mb-6 text-slate-700">Key Responsibilities</h4>
                         <ul class="space-y-4 text-lg">
-                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">🎯</span><div><strong class="font-medium">고객 발굴:</strong> 입찰 및 RFP에 자주 응답하는 회사를 조사하고 식별합니다.</div></li>
-                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">📞</span><div><strong class="font-medium">고객 접촉:</strong> 주요 의사 결정권자와 연결하여 Cocurate를 소개합니다.</div></li>
-                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">💡</span><div><strong class="font-medium">가치 입증:</strong> Cocurate가 특정 문제점을 어떻게 해결하는지 보여주는 제품 데모를 수행합니다.</div></li>
-                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">🤝</span><div><strong class="font-medium">계약 체결:</strong> 잠재 고객을 성공적인 계약 체결로 안내합니다.</div></li>
+                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">🎯</span><div data-key="resp1"></div></li>
+                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">📞</span><div data-key="resp2"></div></li>
+                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">💡</span><div data-key="resp3"></div></li>
+                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">🤝</span><div data-key="resp4"></div></li>
                         </ul>
                     </div>
                     <div class="bg-slate-50 p-8 rounded-xl">
-                        <h4 class="text-2xl font-bold mb-6 text-slate-700">성공을 위한 지원</h4>
-                        <p class="mb-6 text-slate-600">우리는 당신의 성공에 적극적으로 투자합니다. 다음과 같은 지원을 받게 됩니다:</p>
+                        <h4 data-key="supportTitle" class="text-2xl font-bold mb-6 text-slate-700">Equipped for Success</h4>
+                        <p data-key="supportDesc" class="mb-6 text-slate-600">We invest in your success. You'll be equipped with:</p>
                         <ul class="space-y-4 text-lg">
-                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">🏆</span><div><strong class="font-medium">세계적 수준의 제품:</strong> 주요 비즈니스 문제를 실제로 해결하는 솔루션.</div></li>
-                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">📚</span><div><strong class="font-medium">전체 교육:</strong> 제품, 이상적인 고객 프로필 및 효과적인 영업 전략에 대한 심층 교육.</div></li>
-                             <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">📈</span><div><strong class="font-medium">마케팅 및 영업 자료:</strong> 프레젠테이션을 지원하는 전문 자료.</div></li>
-                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">👨‍👩‍👧‍👦</span><div><strong class="font-medium">협업 팀:</strong> 피드백을 공유하고 지원을 받기 위해 창업자 및 제품 팀과 직접 소통.</div></li>
+                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">🏆</span><div data-key="support1"></div></li>
+                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">📚</span><div data-key="support2"></div></li>
+                             <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">📈</span><div data-key="support3"></div></li>
+                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">👨‍👩‍👧‍👦</span><div data-key="support4"></div></li>
                         </ul>
                     </div>
                 </div>
@@ -190,28 +201,29 @@
         <section id="reward" class="py-16 md:py-24">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h3 class="text-3xl md:text-4xl font-bold text-slate-800">당신의 성공, 당신의 보상</h3>
-                    <p class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">우리는 성공에 대해 직접적으로 보상합니다. 당신의 성과가 수입에 상한선 없이 반영되는 강력한 구조입니다.</p>
+                    <h3 data-key="rewardTitle" class="text-3xl md:text-4xl font-bold text-slate-800">Your Success, Your Reward</h3>
+                    <p data-key="rewardSubtitle" class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">We believe in rewarding success directly. Our structure is simple, powerful, and has no cap on your earnings.</p>
                 </div>
                 <div class="bg-white p-8 md:p-12 rounded-xl shadow-lg">
                     <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                         <div>
-                            <h4 class="text-2xl font-bold text-slate-700">커미션 계산기</h4>
-                            <p class="mt-2 mb-4 text-slate-600">총 계약 가치(TCV)의 <strong class="text-teal-600 text-xl">15%</strong>를 커미션으로 받게 됩니다. 예상 계약 금액을 입력하여 커미션을 계산해보세요.</p>
+                            <h4 data-key="calculatorTitle" class="text-2xl font-bold text-slate-700">Commission Calculator</h4>
+                            <p data-key="calculatorDesc" class="mt-2 mb-4 text-slate-600"></p>
                             
-                            <label for="contractValue" class="font-medium text-slate-700">예상 연간 계약 금액 (단위: 만 원)</label>
+                            <label data-key="calculatorLabel" for="contractValue" class="font-medium text-slate-700">Potential Annual Contract Value</label>
                             <div class="mt-1 flex items-center">
-                                <input type="number" id="contractValue" class="w-full p-3 border border-slate-300 rounded-lg text-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition" placeholder="예: 5000">
-                                <span class="ml-3 text-lg text-slate-500">만원</span>
+                                <span id="currency-symbol" class="mr-2 text-lg text-slate-500">$</span>
+                                <input type="number" id="contractValue" class="w-full p-3 border border-slate-300 rounded-lg text-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition">
+                                <span id="currency-unit" class="ml-3 text-lg text-slate-500"></span>
                             </div>
 
                             <div class="mt-6 bg-teal-50 p-6 rounded-lg text-center">
-                                <p class="text-lg text-teal-700">예상 커미션</p>
-                                <p id="commissionResult" class="text-4xl font-bold text-teal-600 mt-1">750 만원</p>
+                                <p data-key="commissionLabel" class="text-lg text-teal-700">Your Estimated Commission</p>
+                                <p id="commissionResult" class="text-4xl font-bold text-teal-600 mt-1">$7,500</p>
                             </div>
                         </div>
                         <div>
-                             <h4 class="text-2xl font-bold text-slate-700 mb-4">수입 잠재력 시각화</h4>
+                             <h4 data-key="chartTitle" class="text-2xl font-bold text-slate-700 mb-4">Earning Potential Visualized</h4>
                              <div class="chart-container">
                                 <canvas id="commissionChart"></canvas>
                              </div>
@@ -224,29 +236,29 @@
         <section id="culture" class="py-16 md:py-24 bg-white">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h3 class="text-3xl md:text-4xl font-bold text-slate-800">우리가 일하는 방식</h3>
-                     <p class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">우리는 다음과 같은 가치를 기반으로 함께 성장합니다.</p>
+                    <h3 data-key="cultureTitle" class="text-3xl md:text-4xl font-bold text-slate-800">How We Work</h4>
+                     <p data-key="cultureSubtitle" class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">We grow together based on these core values.</p>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div class="text-center p-8">
                         <div class="bg-slate-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-3xl">🚀</div>
-                        <h4 class="font-bold text-xl mb-2">주인의식</h4>
-                        <p class="text-slate-600">우리는 모두 성공의 주인입니다. 주도적으로 책임감을 가집니다.</p>
+                        <h4 data-key="value1Title" class="font-bold text-xl mb-2">Ownership</h4>
+                        <p data-key="value1Desc" class="text-slate-600">We are all owners of our success. We take initiative and responsibility.</p>
                     </div>
                      <div class="text-center p-8">
                         <div class="bg-slate-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-3xl">❤️</div>
-                        <h4 class="font-bold text-xl mb-2">고객 중심</h4>
-                        <p class="text-slate-600">우리는 고객의 성공을 도움으로써 승리합니다.</p>
+                        <h4 data-key="value2Title" class="font-bold text-xl mb-2">Customer-Obsessed</h4>
+                        <p data-key="value2Desc" class="text-slate-600">We win by helping our customers win.</p>
                     </div>
                      <div class="text-center p-8">
                         <div class="bg-slate-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-3xl">🤝</div>
-                        <h4 class="font-bold text-xl mb-2">투명성</h4>
-                        <p class="text-slate-600">열린 소통이 핵심입니다. 우리는 직접적이고 정직합니다.</p>
+                        <h4 data-key="value3Title" class="font-bold text-xl mb-2">Transparency</h4>
+                        <p data-key="value3Desc" class="text-slate-600">Open communication is key. We are direct and honest.</p>
                     </div>
                      <div class="text-center p-8">
                         <div class="bg-slate-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-3xl">🌟</div>
-                        <h4 class="font-bold text-xl mb-2">야망</h4>
-                        <p class="text-slate-600">의미 있는 것을 만들고 있으며 모든 일에 높은 목표를 둡니다.</p>
+                        <h4 data-key="value4Title" class="font-bold text-xl mb-2">Ambition</h4>
+                        <p data-key="value4Desc" class="text-slate-600">We are building something significant and aim high in everything we do.</p>
                     </div>
                 </div>
             </div>
@@ -254,11 +266,11 @@
         
         <section id="contact" class="py-20 md:py-32 bg-teal-600 text-white">
             <div class="container mx-auto px-6 text-center">
-                <h3 class="text-3xl md:text-4xl font-bold">우리와 함께 만들어갈 준비가 되셨나요?</h3>
-                <p class="mt-4 text-lg text-teal-100 max-w-2xl mx-auto">당신의 잠재력을 Cocurate에서 펼쳐보세요. 우리는 당신의 합류를 기대하고 있습니다.</p>
-                <a href="mailto:careers@cocurate.com" class="mt-8 inline-block bg-white text-teal-600 font-bold py-3 px-8 rounded-lg text-lg hover:bg-teal-50 transition-colors shadow-lg">이메일로 지원하기</a>
+                <h3 data-key="contactTitle" class="text-3xl md:text-4xl font-bold">Are you ready to build with us?</h3>
+                <p data-key="contactSubtitle" class="mt-4 text-lg text-teal-100 max-w-2xl mx-auto">Unleash your potential at Cocurate. We look forward to you joining us.</p>
+                <a data-key="contactButton" href="mailto:careers@cocurate.com" class="mt-8 inline-block bg-white text-teal-600 font-bold py-3 px-8 rounded-lg text-lg hover:bg-teal-50 transition-colors shadow-lg">Apply via Email</a>
                  <div class="mt-8 text-teal-200">
-                    <p>질문이 있으신가요? 언제든지 연락주세요.</p>
+                    <p data-key="contactQuestions">Questions? Feel free to reach out anytime.</p>
                 </div>
             </div>
         </section>
@@ -272,73 +284,236 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const content = {
+                en: {
+                    // Nav
+                    navOpportunity: "The Opportunity",
+                    navRole: "Your Role",
+                    navReward: "Your Reward",
+                    navCulture: "Our Culture",
+                    applyNow: "Apply Now",
+                    // Hero
+                    heroTitle: "Welcome to Cocurate",
+                    heroSubtitle: "We're looking for talent to help us revolutionize how businesses win.",
+                    // Opportunity
+                    opportunityTitle: "The Opportunity: Solving a Market Problem",
+                    opportunitySubtitle: "Many companies face significant challenges with proposals and tenders. This is the problem we're here to solve.",
+                    problem1Title: "Time-Consuming",
+                    problem1Desc: "Manual tender responses can take days or even weeks.",
+                    problem2Title: "Repetitive Work",
+                    problem2Desc: "Teams answer the same questions over and over again.",
+                    problem3Title: "Inconsistent Quality",
+                    problem3Desc: "Proposal quality and messaging can vary wildly.",
+                    problem4Title: "Lost Revenue",
+                    problem4Desc: "Inefficient processes lead to missed deals.",
+                    tenderTitle: "What is a 'Tender'? The Root of the Problem",
+                    tenderDesc1: "A <strong>Tender</strong> is a formal, competitive process used by large organizations (like governments or corporations) to buy complex or expensive products/services.",
+                    tenderDesc2: "For example, when the government wants to build a new bridge or a large hospital needs a new IT system, instead of just picking a company, they create a detailed document outlining everything they need. This document is the 'invitation to tender'.",
+                    tenderStep1Title: "1. The Invitation (RFP/RFx)",
+                    tenderStep1Desc: "The buyer issues a formal Request for Proposal (RFP). This document is often long and detailed, specifying technical requirements, project scope, deadlines, and legal terms.",
+                    tenderStep2Title: "2. The Bid (Tender Response)",
+                    tenderStep2Desc: "Suppliers who want the job must prepare a comprehensive proposal. This bid must answer every question in the RFP and prove they are the best choice on price, quality, and experience.",
+                    tenderStep3Title: "3. The Evaluation",
+                    tenderStep3Desc: "The buyer collects all bids by a strict deadline and evaluates them against a predefined set of criteria, looking for the best overall value, not just the lowest price.",
+                    tenderStep4Title: "4. The Contract",
+                    tenderStep4Desc: "The company with the winning tender is awarded the contract.",
+                    tenderConclusion: "This is the core problem Cocurate solves. We automate this complex, time-consuming process so our clients can focus on strategy and win more deals.",
+                    solutionTitle: "Cocurate is the solution.",
+                    solutionDesc: "Cocurate solves all these problems with an AI-powered response tool and an intelligent content library. We help companies save hundreds of hours and significantly increase their win rates by automating the tedious work.",
+                    // Role
+                    roleTitle: "Your Role: Business Development Champion",
+                    roleSubtitle: "Your mission is to drive Cocurate's growth. You will be the face of our company and the first point of contact for our future customers.",
+                    responsibilitiesTitle: "Key Responsibilities",
+                    resp1: "<strong class='font-medium'>Prospect & Identify:</strong> Research and identify companies that frequently respond to tenders and RFPs.",
+                    resp2: "<strong class='font-medium'>Outreach:</strong> Connect with key decision-makers to introduce Cocurate.",
+                    resp3: "<strong class='font-medium'>Demonstrate Value:</strong> Conduct product demos that show how Cocurate solves specific pain points.",
+                    resp4: "<strong class='font-medium'>Close Deals:</strong> Guide prospects through the sales cycle to a successful close.",
+                    supportTitle: "Equipped for Success",
+                    supportDesc: "We invest in your success. You'll be equipped with:",
+                    support1: "<strong class='font-medium'>A World-Class Product:</strong> A solution that genuinely solves a major business problem.",
+                    support2: "<strong class='font-medium'>Full Training:</strong> Deep-dive sessions on the product, our ideal customer, and effective sales strategies.",
+                    support3: "<strong class='font-medium'>Marketing & Sales Collateral:</strong> Professional materials to support your outreach.",
+                    support4: "<strong class='font-medium'>A Collaborative Team:</strong> Direct access to the founders and product team for feedback and support.",
+                    // Reward
+                    rewardTitle: "Your Success, Your Reward",
+                    rewardSubtitle: "We believe in rewarding success directly. Our structure is simple, powerful, and has no cap on your earnings.",
+                    calculatorTitle: "Commission Calculator",
+                    calculatorDesc: "You will earn <strong class='text-teal-600 text-xl'>15% commission</strong> on the Total Contract Value (TCV) for every new client. Enter a potential contract value to see your commission.",
+                    calculatorLabel: "Potential Annual Contract Value (USD)",
+                    commissionLabel: "Your Estimated Commission",
+                    chartTitle: "Earning Potential Visualized",
+                    chartLabel: "Estimated Commission",
+                    chartYourEstimate: "Your Estimate",
+                    // Culture
+                    cultureTitle: "How We Work",
+                    cultureSubtitle: "We grow together based on these core values.",
+                    value1Title: "Ownership",
+                    value1Desc: "We are all owners of our success. We take initiative and responsibility.",
+                    value2Title: "Customer-Obsessed",
+                    value2Desc: "We win by helping our customers win.",
+                    value3Title: "Transparency",
+                    value3Desc: "Open communication is key. We are direct and honest.",
+                    value4Title: "Ambition",
+                    value4Desc: "We are building something significant and aim high in everything we do.",
+                    // Contact
+                    contactTitle: "Are you ready to build with us?",
+                    contactSubtitle: "Unleash your potential at Cocurate. We look forward to you joining us.",
+                    contactButton: "Apply via Email",
+                    contactQuestions: "Questions? Feel free to reach out anytime."
+                },
+                ko: {
+                    // Nav
+                    navOpportunity: "기회",
+                    navRole: "당신의 역할",
+                    navReward: "보상",
+                    navCulture: "문화",
+                    applyNow: "지원하기",
+                    // Hero
+                    heroTitle: "Cocurate에 오신 것을 환영합니다",
+                    heroSubtitle: "비즈니스가 승리하는 방식을 함께 혁신할 인재를 찾습니다.",
+                    // Opportunity
+                    opportunityTitle: "기회: 시장의 문제를 해결합니다",
+                    opportunitySubtitle: "많은 기업들이 제안서 및 입찰 과정에서 큰 어려움을 겪고 있습니다. 이것이 바로 우리가 해결하려는 문제입니다.",
+                    problem1Title: "시간 소모",
+                    problem1Desc: "수동 입찰 응답은 며칠 또는 몇 주가 걸릴 수 있습니다.",
+                    problem2Title: "반복 작업",
+                    problem2Desc: "팀은 동일한 질문에 계속해서 답변해야 합니다.",
+                    problem3Title: "비일관성",
+                    problem3Desc: "제안서마다 품질과 메시지가 크게 다를 수 있습니다.",
+                    problem4Title: "수익 손실",
+                    problem4Desc: "비효율적인 프로세스는 계약 실패로 이어집니다.",
+                    tenderTitle: "이 문제의 원인: '입찰(Tender)'이란 무엇일까요?",
+                    tenderDesc1: "<strong>입찰(Tender)</strong>은 정부나 대기업 같은 대규모 조직이 복잡하거나 값비싼 제품/서비스를 구매할 때 사용하는 공식적인 경쟁 프로세스입니다.",
+                    tenderDesc2: "예를 들어 정부가 새 다리를 건설하거나, 대형 병원이 새로운 IT 시스템을 필요로 할 때 특정 회사를 바로 선택하는 대신, 필요한 모든 것을 상세히 기술한 문서를 만듭니다. 이 문서가 바로 '입찰 초대장'입니다.",
+                    tenderStep1Title: "1. 초대 (RFP/RFx)",
+                    tenderStep1Desc: "구매자(정부 기관, 대기업 등)가 공식적인 요청서(RFP: 제안 요청서)를 발행합니다. 이 문서는 기술적 요구사항, 프로젝트 범위, 마감일, 법적 조건 등을 명시하며 매우 길고 상세합니다.",
+                    tenderStep2Title: "2. 제안 (입찰 응답)",
+                    tenderStep2Desc: "프로젝트를 수주하려는 공급업체들은 이 요청서에 대한 포괄적인 제안서를 준비해야 합니다. 이 제안서는 RFP의 모든 질문에 답변하고, 가격, 품질, 경험 면에서 자사가 최고의 선택임을 증명해야 합니다.",
+                    tenderStep3Title: "3. 평가",
+                    tenderStep3Desc: "구매자는 마감일까지 모든 제안서를 수집하여 사전 정의된 기준에 따라 평가합니다. 단순히 가장 저렴한 가격이 아니라, 전반적으로 최고의 가치를 제공하는 제안을 선택합니다.",
+                    tenderStep4Title: "4. 계약",
+                    tenderStep4Desc: "최종적으로 선정된 업체가 계약을 수주하게 됩니다.",
+                    tenderConclusion: "이 과정이 바로 Cocurate가 해결하는 핵심적인 문제입니다. 저희는 이 복잡하고 시간 소모적인 과정을 자동화하여 고객이 더 중요한 전략에 집중하고, 더 많은 계약을 수주할 수 있도록 돕습니다.",
+                    solutionTitle: "Cocurate가 바로 해결책입니다.",
+                    solutionDesc: "Cocurate는 AI 기반 응답 도구와 지능형 콘텐츠 라이브러리를 통해 이 모든 문제를 해결합니다. 저희는 기업이 수백 시간을 절약하고 수주율을 크게 높일 수 있도록 돕습니다. 우리는 지루한 작업을 자동화하여 영업팀이 전략과 관계 구축에 집중할 수 있도록 합니다.",
+                    // Role
+                    roleTitle: "당신의 역할: 비즈니스 개발 챔피언",
+                    roleSubtitle: "당신의 미션은 Cocurate의 성장을 주도하는 것입니다. 당신은 미래 고객을 위한 Cocurate의 첫 번째 접점이자 얼굴이 될 것입니다.",
+                    responsibilitiesTitle: "주요 책임",
+                    resp1: "<strong class='font-medium'>고객 발굴:</strong> 입찰 및 RFP에 자주 응답하는 회사를 조사하고 식별합니다.",
+                    resp2: "<strong class='font-medium'>고객 접촉:</strong> 주요 의사 결정권자와 연결하여 Cocurate를 소개합니다.",
+                    resp3: "<strong class='font-medium'>가치 입증:</strong> Cocurate가 특정 문제점을 어떻게 해결하는지 보여주는 제품 데모를 수행합니다.",
+                    resp4: "<strong class='font-medium'>계약 체결:</strong> 잠재 고객을 성공적인 계약 체결로 안내합니다.",
+                    supportTitle: "성공을 위한 지원",
+                    supportDesc: "우리는 당신의 성공에 적극적으로 투자합니다. 다음과 같은 지원을 받게 됩니다:",
+                    support1: "<strong class='font-medium'>세계적 수준의 제품:</strong> 주요 비즈니스 문제를 실제로 해결하는 솔루션.",
+                    support2: "<strong class='font-medium'>전체 교육:</strong> 제품, 이상적인 고객 프로필 및 효과적인 영업 전략에 대한 심층 교육.",
+                    support3: "<strong class='font-medium'>마케팅 및 영업 자료:</strong> 프레젠테이션을 지원하는 전문 자료.",
+                    support4: "<strong class='font-medium'>협업 팀:</strong> 피드백을 공유하고 지원을 받기 위해 창업자 및 제품 팀과 직접 소통.",
+                    // Reward
+                    rewardTitle: "당신의 성공, 당신의 보상",
+                    rewardSubtitle: "우리는 성공에 대해 직접적으로 보상합니다. 당신의 성과가 수입에 상한선 없이 반영되는 강력한 구조입니다.",
+                    calculatorTitle: "커미션 계산기",
+                    calculatorDesc: "총 계약 가치(TCV)의 <strong class='text-teal-600 text-xl'>15%</strong>를 커미션으로 받게 됩니다. 예상 계약 금액을 입력하여 커미션을 계산해보세요.",
+                    calculatorLabel: "예상 연간 계약 금액",
+                    commissionLabel: "예상 커미션",
+                    chartTitle: "수입 잠재력 시각화",
+                    chartLabel: "예상 커미션",
+                    chartYourEstimate: "나의 예상",
+                    // Culture
+                    cultureTitle: "우리가 일하는 방식",
+                    cultureSubtitle: "우리는 다음과 같은 가치를 기반으로 함께 성장합니다.",
+                    value1Title: "주인의식",
+                    value1Desc: "우리는 모두 성공의 주인입니다. 주도적으로 책임감을 가집니다.",
+                    value2Title: "고객 중심",
+                    value2Desc: "우리는 고객의 성공을 도움으로써 승리합니다.",
+                    value3Title: "투명성",
+                    value3Desc: "열린 소통이 핵심입니다. 우리는 직접적이고 정직합니다.",
+                    value4Title: "야망",
+                    value4Desc: "의미 있는 것을 만들고 있으며 모든 일에 높은 목표를 둡니다.",
+                    // Contact
+                    contactTitle: "우리와 함께 만들어갈 준비가 되셨나요?",
+                    contactSubtitle: "당신의 잠재력을 Cocurate에서 펼쳐보세요. 우리는 당신의 합류를 기대하고 있습니다.",
+                    contactButton: "이메일로 지원하기",
+                    contactQuestions: "질문이 있으신가요? 언제든지 연락주세요."
+                }
+            };
+
+            let currentLang = 'en';
+            let commissionChart;
+
             const contractValueInput = document.getElementById('contractValue');
             const commissionResult = document.getElementById('commissionResult');
             const commissionChartCanvas = document.getElementById('commissionChart').getContext('2d');
-            let commissionChart;
+            const currencySymbol = document.getElementById('currency-symbol');
+            const currencyUnit = document.getElementById('currency-unit');
+            const langEnBtn = document.getElementById('lang-en');
+            const langKoBtn = document.getElementById('lang-ko');
 
-            const formatCurrency = (value) => {
-                if (isNaN(value) || value === 0) return '0 원';
-                const krw = value * 10000;
-                return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(krw).replace('₩','').trim() + ' 원';
-            };
-            
             const calculateCommission = (value) => value * 0.15;
 
-            const updateDisplay = (value) => {
-                const contract = parseFloat(value) || 0;
-                const commission = calculateCommission(contract);
-                commissionResult.textContent = formatCurrency(commission);
+            const formatCurrency = (value, lang) => {
+                if (isNaN(value)) value = 0;
+                if (lang === 'ko') {
+                    const krw = value * 10000;
+                    return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(krw).replace('₩', '').trim() + ' 원';
+                }
+                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
             };
 
-            const initialContractValue = 5000;
-            contractValueInput.value = initialContractValue;
-            updateDisplay(initialContractValue);
-
-            const chartData = {
-                labels: ['2,500만원 계약', '5,000만원 계약', '1억원 계약', '나의 예상'],
-                datasets: [{
-                    label: '예상 커미션 (만원)',
-                    data: [calculateCommission(2500), calculateCommission(5000), calculateCommission(10000), calculateCommission(initialContractValue)],
-                    backgroundColor: [
-                        'rgba(20, 184, 166, 0.3)', // Teal-500 with opacity
-                        'rgba(20, 184, 166, 0.5)',
-                        'rgba(20, 184, 166, 0.7)',
-                        'rgba(15, 118, 110, 1)'   // Teal-700 solid
-                    ],
-                    borderColor: [
-                        'rgba(20, 184, 166, 1)',
-                        'rgba(20, 184, 166, 1)',
-                        'rgba(20, 184, 166, 1)',
-                        'rgba(15, 118, 110, 1)'
-                    ],
-                    borderWidth: 1
-                }]
+            const updateCalculatorDisplay = () => {
+                const rawValue = parseFloat(contractValueInput.value) || 0;
+                const commission = calculateCommission(rawValue);
+                commissionResult.textContent = formatCurrency(commission, currentLang);
             };
 
-            const createChart = () => {
+            const createOrUpdateChart = () => {
+                const rawValue = parseFloat(contractValueInput.value) || 0;
+                
+                const enContractValues = [25000, 50000, 100000, currentLang === 'en' ? rawValue : rawValue / 1300]; // Approx conversion for chart consistency
+                const koContractValues = [2500, 5000, 10000, currentLang === 'ko' ? rawValue : rawValue * 1300];
+
+                const valuesForChart = currentLang === 'ko' ? koContractValues : enContractValues;
+                const commissionValues = valuesForChart.map(v => calculateCommission(v));
+
+                const chartLabels = currentLang === 'en' 
+                    ? ['$25k Deal', '$50k Deal', '$100k Deal', content.en.chartYourEstimate]
+                    : ['2,500만원 계약', '5,000만원 계약', '1억원 계약', content.ko.chartYourEstimate];
+
+                if (commissionChart) {
+                    commissionChart.destroy();
+                }
+                
                 commissionChart = new Chart(commissionChartCanvas, {
                     type: 'bar',
-                    data: chartData,
+                    data: {
+                        labels: chartLabels,
+                        datasets: [{
+                            label: content[currentLang].chartLabel,
+                            data: commissionValues,
+                            backgroundColor: [
+                                'rgba(20, 184, 166, 0.3)',
+                                'rgba(20, 184, 166, 0.5)',
+                                'rgba(20, 184, 166, 0.7)',
+                                'rgba(15, 118, 110, 1)'
+                            ],
+                            borderColor: [
+                                'rgba(20, 184, 166, 1)',
+                                'rgba(20, 184, 166, 1)',
+                                'rgba(20, 184, 166, 1)',
+                                'rgba(15, 118, 110, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: {
-                                display: false
-                            },
+                            legend: { display: false },
                             tooltip: {
                                 callbacks: {
-                                    label: function(context) {
-                                        let label = context.dataset.label || '';
-                                        if (label) {
-                                            label += ': ';
-                                        }
-                                        if (context.parsed.y !== null) {
-                                            label += formatCurrency(context.parsed.y);
-                                        }
-                                        return label;
-                                    }
+                                    label: (context) => `${context.dataset.label}: ${formatCurrency(context.parsed.y, currentLang)}`
                                 }
                             }
                         },
@@ -346,9 +521,7 @@
                             y: {
                                 beginAtZero: true,
                                 ticks: {
-                                    callback: function(value, index, values) {
-                                        return formatCurrency(value);
-                                    }
+                                    callback: (value) => formatCurrency(value, currentLang)
                                 }
                             }
                         }
@@ -356,54 +529,77 @@
                 });
             };
 
-            const updateChart = (value) => {
-                const contract = parseFloat(value) || 0;
-                commissionChart.data.datasets[0].data[3] = calculateCommission(contract);
-                commissionChart.update();
+            const setLanguage = (lang) => {
+                currentLang = lang;
+                document.documentElement.lang = lang;
+
+                document.querySelectorAll('[data-key]').forEach(el => {
+                    const key = el.dataset.key;
+                    if (content[lang][key]) {
+                        if (key.startsWith('resp') || key.startsWith('support') || key.startsWith('tender') || key === 'calculatorDesc') {
+                            el.innerHTML = content[lang][key];
+                        } else {
+                            el.textContent = content[lang][key];
+                        }
+                    }
+                });
+
+                if (lang === 'ko') {
+                    langKoBtn.classList.add('bg-teal-500', 'text-white');
+                    langKoBtn.classList.remove('bg-slate-200', 'text-slate-500');
+                    langEnBtn.classList.add('bg-slate-200', 'text-slate-500');
+                    langEnBtn.classList.remove('bg-teal-500', 'text-white');
+                    currencySymbol.textContent = '';
+                    currencyUnit.textContent = '만원';
+                    contractValueInput.placeholder = '예: 5000';
+                    contractValueInput.value = 5000;
+                } else {
+                    langEnBtn.classList.add('bg-teal-500', 'text-white');
+                    langEnBtn.classList.remove('bg-slate-200', 'text-slate-500');
+                    langKoBtn.classList.add('bg-slate-200', 'text-slate-500');
+                    langKoBtn.classList.remove('bg-teal-500', 'text-white');
+                    currencySymbol.textContent = '$';
+                    currencyUnit.textContent = '';
+                    contractValueInput.placeholder = 'e.g., 50000';
+                    contractValueInput.value = 50000;
+                }
+                updateCalculatorDisplay();
+                createOrUpdateChart();
             };
 
-            contractValueInput.addEventListener('input', (e) => {
-                updateDisplay(e.target.value);
-                updateChart(e.target.value);
+            contractValueInput.addEventListener('input', () => {
+                updateCalculatorDisplay();
+                createOrUpdateChart();
             });
-            
-            createChart();
-            updateChart(initialContractValue);
-            
+
+            langEnBtn.addEventListener('click', () => setLanguage('en'));
+            langKoBtn.addEventListener('click', () => setLanguage('ko'));
+
+            // Initial setup
+            setLanguage('en');
+
+            // Nav link observer
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('main > section');
-
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.4
-            };
-
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         navLinks.forEach(link => {
                             link.classList.remove('active');
-                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                            if (`#${entry.target.id}` === link.getAttribute('href')) {
                                 link.classList.add('active');
                             }
                         });
                     }
                 });
-            }, observerOptions);
+            }, { rootMargin: '0px', threshold: 0.4 });
+            sections.forEach(section => observer.observe(section));
 
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-
+            // Details/summary arrow animation
             const details = document.getElementById('tender-details');
             const arrow = details.querySelector('.arrow');
             details.addEventListener('toggle', () => {
-                if (details.open) {
-                    arrow.style.transform = 'rotate(180deg)';
-                } else {
-                    arrow.style.transform = 'rotate(0deg)';
-                }
+                arrow.style.transform = details.open ? 'rotate(180deg)' : 'rotate(0deg)';
             });
         });
     </script>
