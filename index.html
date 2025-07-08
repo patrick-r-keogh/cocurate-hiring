@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
     <!-- Chosen Palette: Warm Neutrals & Subtle Accent (Beige, Slate, Muted Teal) -->
     <!-- Application Structure Plan: The application uses a single-page, scrolling narrative structure with a sticky navigation bar and a language switcher. This design transforms the linear presentation into an explorable journey. It starts with a compelling "Problem/Solution" section, details the candidate's specific "Role & Support," provides an interactive "Compensation Calculator" for tangible engagement, and finishes with "Culture" and a call to action. This structure is chosen because it logically flows for a sales candidate, prioritizing what they need to know (the opportunity, their role, their reward) while allowing them to navigate freely. The interactive calculator is the centerpiece, designed to make the compensation model exciting and concrete. -->
     <!-- Visualization & Content Choices: 
@@ -21,13 +24,18 @@
         :lang(ko) {
             font-family: 'Noto Sans KR', sans-serif;
         }
+
         :lang(en) {
             font-family: 'Inter', sans-serif;
         }
+
         body {
-            background-color: #FDFBF8; /* Warm off-white */
-            color: #334155; /* Slate 700 */
+            background-color: #FDFBF8;
+            /* Warm off-white */
+            color: #334155;
+            /* Slate 700 */
         }
+
         .chart-container {
             position: relative;
             width: 100%;
@@ -37,55 +45,71 @@
             height: 300px;
             max-height: 400px;
         }
+
         @media (min-width: 768px) {
             .chart-container {
                 height: 350px;
             }
         }
+
         .nav-link {
             transition: color 0.3s ease;
         }
+
         .nav-link.active {
-            color: #14B8A6; /* Teal 500 */
+            color: #14B8A6;
+            /* Teal 500 */
             font-weight: 500;
         }
+
         .card-hover {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .card-hover:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
         }
+
         .details-content {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease-in-out;
         }
+
         details[open] .details-content {
-            max-height: 1000px; /* Adjust as needed */
+            max-height: 1000px;
+            /* Adjust as needed */
         }
+
         details summary::-webkit-details-marker {
             display: none;
         }
     </style>
 </head>
+
 <body class="antialiased">
 
     <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-slate-800">Cocurate</h1>
-            <div class="hidden pl-6 w-full md:flex items-center space-x-8">
-                <a data-key="navOpportunity" href="#opportunity" class="nav-link text-slate-600 hover:text-teal-500">The Opportunity</a>
+            <div class="hidden w-full md:flex items-center justify-center space-x-8">
+                <a data-key="navOpportunity" href="#opportunity" class="nav-link text-slate-600 hover:text-teal-500">The
+                    Opportunity</a>
                 <a data-key="navRole" href="#role" class="nav-link text-slate-600 hover:text-teal-500">Your Role</a>
-                <a data-key="navReward" href="#reward" class="nav-link text-slate-600 hover:text-teal-500">Your Reward</a>
-                <a data-key="navCulture" href="#culture" class="nav-link text-slate-600 hover:text-teal-500">Our Culture</a>
+                <a data-key="navReward" href="#reward" class="nav-link text-slate-600 hover:text-teal-500">Your
+                    Reward</a>
+                <a data-key="navCulture" href="#culture" class="nav-link text-slate-600 hover:text-teal-500">Our
+                    Culture</a>
             </div>
             <div class="flex items-center">
                 <div class="flex items-center space-x-2 border-l border-slate-200 pl-6">
                     <button id="lang-en" class="text-sm font-medium p-1 rounded-md">EN</button>
                     <button id="lang-ko" class="text-sm font-medium p-1 rounded-md">KO</button>
                 </div>
-                <a data-key="applyNow" href="#contact" class="hidden md:block bg-teal-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-teal-600 transition-colors ml-6">Apply Now</a>
+                <a data-key="applyNow" href="#contact"
+                    class="hidden md:block bg-teal-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-teal-600 transition-colors ml-6">Apply
+                    Now</a>
             </div>
         </nav>
     </header>
@@ -93,45 +117,56 @@
     <main>
         <section id="hero" class="py-20 md:py-32 text-center bg-white">
             <div class="container mx-auto px-6">
-                <h2 data-key="heroTitle" class="text-4xl md:text-6xl font-bold text-slate-800 leading-tight">Welcome to Cocurate</h2>
-                <p data-key="heroSubtitle" class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">We're looking for talent to help us revolutionize how businesses win.</p>
+                <h2 data-key="heroTitle" class="text-4xl md:text-6xl font-bold text-slate-800 leading-tight">Welcome to
+                    Cocurate</h2>
+                <p data-key="heroSubtitle" class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">We're
+                    looking for talent to help us revolutionize how businesses win.</p>
             </div>
         </section>
 
         <section id="opportunity" class="py-16 md:py-24">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h3 data-key="opportunityTitle" class="text-3xl md:text-4xl font-bold text-slate-800">The Opportunity: Solving a Market Problem</h3>
-                    <p data-key="opportunitySubtitle" class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">Many companies face significant challenges with proposals and tenders. This is the problem we're here to solve.</p>
+                    <h3 data-key="opportunityTitle" class="text-3xl md:text-4xl font-bold text-slate-800">The
+                        Opportunity: Solving a Market Problem</h3>
+                    <p data-key="opportunitySubtitle" class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">Many
+                        companies face significant challenges with proposals and tenders. This is the problem we're here
+                        to solve.</p>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div class="bg-white p-8 rounded-xl shadow-md card-hover">
                         <div class="text-3xl mb-4">⏱️</div>
                         <h4 data-key="problem1Title" class="font-bold text-xl mb-2">Time-Consuming</h4>
-                        <p data-key="problem1Desc" class="text-slate-600">Manual tender responses can take days or even weeks.</p>
+                        <p data-key="problem1Desc" class="text-slate-600">Manual tender responses can take days or even
+                            weeks.</p>
                     </div>
                     <div class="bg-white p-8 rounded-xl shadow-md card-hover">
                         <div class="text-3xl mb-4">🔄</div>
                         <h4 data-key="problem2Title" class="font-bold text-xl mb-2">Repetitive Work</h4>
-                        <p data-key="problem2Desc" class="text-slate-600">Teams answer the same questions over and over again.</p>
+                        <p data-key="problem2Desc" class="text-slate-600">Teams answer the same questions over and over
+                            again.</p>
                     </div>
                     <div class="bg-white p-8 rounded-xl shadow-md card-hover">
                         <div class="text-3xl mb-4">📉</div>
                         <h4 data-key="problem3Title" class="font-bold text-xl mb-2">Inconsistent Quality</h4>
-                        <p data-key="problem3Desc" class="text-slate-600">Proposal quality and messaging can vary wildly.</p>
+                        <p data-key="problem3Desc" class="text-slate-600">Proposal quality and messaging can vary
+                            wildly.</p>
                     </div>
                     <div class="bg-white p-8 rounded-xl shadow-md card-hover">
                         <div class="text-3xl mb-4">💸</div>
                         <h4 data-key="problem4Title" class="font-bold text-xl mb-2">Lost Revenue</h4>
-                        <p data-key="problem4Desc" class="text-slate-600">Inefficient processes lead to missed deals.</p>
+                        <p data-key="problem4Desc" class="text-slate-600">Inefficient processes lead to missed deals.
+                        </p>
                     </div>
                 </div>
 
                 <div class="mt-16 max-w-4xl mx-auto">
                     <details id="tender-details" class="bg-white rounded-xl shadow-md overflow-hidden">
                         <summary class="p-6 cursor-pointer flex justify-between items-center">
-                            <h4 data-key="tenderTitle" class="text-xl font-bold text-slate-700">What is a 'Tender'? The Root of the Problem</h4>
-                            <span class="text-teal-500 text-2xl transform transition-transform duration-300 arrow">▼</span>
+                            <h4 data-key="tenderTitle" class="text-xl font-bold text-slate-700">What is a 'Tender'? The
+                                Root of the Problem</h4>
+                            <span
+                                class="text-teal-500 text-2xl transform transition-transform duration-300 arrow">▼</span>
                         </summary>
                         <div class="details-content">
                             <div class="p-6 pt-0 text-slate-600">
@@ -162,8 +197,11 @@
                 </div>
 
                 <div class="mt-12 text-center bg-teal-50 p-10 rounded-xl">
-                     <h3 data-key="solutionTitle" class="text-2xl font-bold text-teal-800">Cocurate is the solution.</h3>
-                     <p data-key="solutionDesc" class="mt-4 text-lg text-teal-700 max-w-3xl mx-auto">Cocurate solves all these problems with an AI-powered response tool and an intelligent content library. We help companies save hundreds of hours and significantly increase their win rates by automating the tedious work.</p>
+                    <h3 data-key="solutionTitle" class="text-2xl font-bold text-teal-800">Cocurate is the solution.</h3>
+                    <p data-key="solutionDesc" class="mt-4 text-lg text-teal-700 max-w-3xl mx-auto">Cocurate solves all
+                        these problems with an AI-powered response tool and an intelligent content library. We help
+                        companies save hundreds of hours and significantly increase their win rates by automating the
+                        tedious work.</p>
                 </div>
             </div>
         </section>
@@ -171,27 +209,49 @@
         <section id="role" class="py-16 md:py-24 bg-white">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h3 data-key="roleTitle" class="text-3xl md:text-4xl font-bold text-slate-800">Your Role: Business Development Champion</h3>
-                    <p data-key="roleSubtitle" class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">Your mission is to drive Cocurate's growth. You will be the face of our company and the first point of contact for our future customers.</p>
+                    <h3 data-key="roleTitle" class="text-3xl md:text-4xl font-bold text-slate-800">Your Role: Business
+                        Development Champion</h3>
+                    <p data-key="roleSubtitle" class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">Your mission is to
+                        drive Cocurate's growth. You will be the face of our company and the first point of contact for
+                        our future customers.</p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-12 items-start">
                     <div>
-                        <h4 data-key="responsibilitiesTitle" class="text-2xl font-bold mb-6 text-slate-700">Key Responsibilities</h4>
+                        <h4 data-key="responsibilitiesTitle" class="text-2xl font-bold mb-6 text-slate-700">Key
+                            Responsibilities</h4>
                         <ul class="space-y-4 text-lg">
-                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">🎯</span><div data-key="resp1"></div></li>
-                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">📞</span><div data-key="resp2"></div></li>
-                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">💡</span><div data-key="resp3"></div></li>
-                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">🤝</span><div data-key="resp4"></div></li>
+                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">🎯</span>
+                                <div data-key="resp1"></div>
+                            </li>
+                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">📞</span>
+                                <div data-key="resp2"></div>
+                            </li>
+                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">💡</span>
+                                <div data-key="resp3"></div>
+                            </li>
+                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">🤝</span>
+                                <div data-key="resp4"></div>
+                            </li>
                         </ul>
                     </div>
                     <div class="bg-slate-50 p-8 rounded-xl">
-                        <h4 data-key="supportTitle" class="text-2xl font-bold mb-6 text-slate-700">Equipped for Success</h4>
-                        <p data-key="supportDesc" class="mb-6 text-slate-600">We invest in your success. You'll be equipped with:</p>
+                        <h4 data-key="supportTitle" class="text-2xl font-bold mb-6 text-slate-700">Equipped for Success
+                        </h4>
+                        <p data-key="supportDesc" class="mb-6 text-slate-600">We invest in your success. You'll be
+                            equipped with:</p>
                         <ul class="space-y-4 text-lg">
-                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">🏆</span><div data-key="support1"></div></li>
-                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">📚</span><div data-key="support2"></div></li>
-                             <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">📈</span><div data-key="support3"></div></li>
-                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">👨‍👩‍👧‍👦</span><div data-key="support4"></div></li>
+                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">🏆</span>
+                                <div data-key="support1"></div>
+                            </li>
+                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">📚</span>
+                                <div data-key="support2"></div>
+                            </li>
+                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">📈</span>
+                                <div data-key="support3"></div>
+                            </li>
+                            <li class="flex items-start"><span class="text-teal-500 mr-3 mt-1">👨‍👩‍👧‍👦</span>
+                                <div data-key="support4"></div>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -201,32 +261,40 @@
         <section id="reward" class="py-16 md:py-24">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h3 data-key="rewardTitle" class="text-3xl md:text-4xl font-bold text-slate-800">Your Success, Your Reward</h3>
-                    <p data-key="rewardSubtitle" class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">We believe in rewarding success directly. Our structure is simple, powerful, and has no cap on your earnings.</p>
+                    <h3 data-key="rewardTitle" class="text-3xl md:text-4xl font-bold text-slate-800">Your Success, Your
+                        Reward</h3>
+                    <p data-key="rewardSubtitle" class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">We believe in
+                        rewarding success directly. Our structure is simple, powerful, and has no cap on your earnings.
+                    </p>
                 </div>
                 <div class="bg-white p-8 md:p-12 rounded-xl shadow-lg">
                     <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                         <div>
-                            <h4 data-key="calculatorTitle" class="text-2xl font-bold text-slate-700">Commission Calculator</h4>
+                            <h4 data-key="calculatorTitle" class="text-2xl font-bold text-slate-700">Commission
+                                Calculator</h4>
                             <p data-key="calculatorDesc" class="mt-2 mb-4 text-slate-600"></p>
-                            
-                            <label data-key="calculatorLabel" for="contractValue" class="font-medium text-slate-700">Potential Annual Contract Value</label>
+
+                            <label data-key="calculatorLabel" for="contractValue"
+                                class="font-medium text-slate-700">Potential Annual Contract Value</label>
                             <div class="mt-1 flex items-center">
                                 <span id="currency-symbol" class="mr-2 text-lg text-slate-500">$</span>
-                                <input type="number" id="contractValue" class="w-full p-3 border border-slate-300 rounded-lg text-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition">
+                                <input type="number" id="contractValue"
+                                    class="w-full p-3 border border-slate-300 rounded-lg text-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition">
                                 <span id="currency-unit" class="ml-3 text-lg text-slate-500"></span>
                             </div>
 
                             <div class="mt-6 bg-teal-50 p-6 rounded-lg text-center">
-                                <p data-key="commissionLabel" class="text-lg text-teal-700">Your Estimated Commission</p>
+                                <p data-key="commissionLabel" class="text-lg text-teal-700">Your Estimated Commission
+                                </p>
                                 <p id="commissionResult" class="text-4xl font-bold text-teal-600 mt-1">$7,500</p>
                             </div>
                         </div>
                         <div>
-                             <h4 data-key="chartTitle" class="text-2xl font-bold text-slate-700 mb-4">Earning Potential Visualized</h4>
-                             <div class="chart-container">
+                            <h4 data-key="chartTitle" class="text-2xl font-bold text-slate-700 mb-4">Earning Potential
+                                Visualized</h4>
+                            <div class="chart-container">
                                 <canvas id="commissionChart"></canvas>
-                             </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -237,39 +305,54 @@
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h3 data-key="cultureTitle" class="text-3xl md:text-4xl font-bold text-slate-800">How We Work</h4>
-                     <p data-key="cultureSubtitle" class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">We grow together based on these core values.</p>
+                        <p data-key="cultureSubtitle" class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">We grow
+                            together based on these core values.</p>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div class="text-center p-8">
-                        <div class="bg-slate-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-3xl">🚀</div>
+                        <div
+                            class="bg-slate-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-3xl">
+                            🚀</div>
                         <h4 data-key="value1Title" class="font-bold text-xl mb-2">Ownership</h4>
-                        <p data-key="value1Desc" class="text-slate-600">We are all owners of our success. We take initiative and responsibility.</p>
+                        <p data-key="value1Desc" class="text-slate-600">We are all owners of our success. We take
+                            initiative and responsibility.</p>
                     </div>
-                     <div class="text-center p-8">
-                        <div class="bg-slate-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-3xl">❤️</div>
+                    <div class="text-center p-8">
+                        <div
+                            class="bg-slate-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-3xl">
+                            ❤️</div>
                         <h4 data-key="value2Title" class="font-bold text-xl mb-2">Customer-Obsessed</h4>
                         <p data-key="value2Desc" class="text-slate-600">We win by helping our customers win.</p>
                     </div>
-                     <div class="text-center p-8">
-                        <div class="bg-slate-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-3xl">🤝</div>
+                    <div class="text-center p-8">
+                        <div
+                            class="bg-slate-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-3xl">
+                            🤝</div>
                         <h4 data-key="value3Title" class="font-bold text-xl mb-2">Transparency</h4>
-                        <p data-key="value3Desc" class="text-slate-600">Open communication is key. We are direct and honest.</p>
+                        <p data-key="value3Desc" class="text-slate-600">Open communication is key. We are direct and
+                            honest.</p>
                     </div>
-                     <div class="text-center p-8">
-                        <div class="bg-slate-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-3xl">🌟</div>
+                    <div class="text-center p-8">
+                        <div
+                            class="bg-slate-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-3xl">
+                            🌟</div>
                         <h4 data-key="value4Title" class="font-bold text-xl mb-2">Ambition</h4>
-                        <p data-key="value4Desc" class="text-slate-600">We are building something significant and aim high in everything we do.</p>
+                        <p data-key="value4Desc" class="text-slate-600">We are building something significant and aim
+                            high in everything we do.</p>
                     </div>
                 </div>
             </div>
         </section>
-        
+
         <section id="contact" class="py-20 md:py-32 bg-teal-600 text-white">
             <div class="container mx-auto px-6 text-center">
                 <h3 data-key="contactTitle" class="text-3xl md:text-4xl font-bold">Are you ready to build with us?</h3>
-                <p data-key="contactSubtitle" class="mt-4 text-lg text-teal-100 max-w-2xl mx-auto">Unleash your potential at Cocurate. We look forward to you joining us.</p>
-                <a data-key="contactButton" href="mailto:careers@cocurate.com" class="mt-8 inline-block bg-white text-teal-600 font-bold py-3 px-8 rounded-lg text-lg hover:bg-teal-50 transition-colors shadow-lg">Apply via Email</a>
-                 <div class="mt-8 text-teal-200">
+                <p data-key="contactSubtitle" class="mt-4 text-lg text-teal-100 max-w-2xl mx-auto">Unleash your
+                    potential at Cocurate. We look forward to you joining us.</p>
+                <a data-key="contactButton" href="mailto:careers@cocurate.com"
+                    class="mt-8 inline-block bg-white text-teal-600 font-bold py-3 px-8 rounded-lg text-lg hover:bg-teal-50 transition-colors shadow-lg">Apply
+                    via Email</a>
+                <div class="mt-8 text-teal-200">
                     <p data-key="contactQuestions">Questions? Feel free to reach out anytime.</p>
                 </div>
             </div>
@@ -469,21 +552,21 @@
 
             const createOrUpdateChart = () => {
                 const rawValue = parseFloat(contractValueInput.value) || 0;
-                
+
                 const enContractValues = [25000, 50000, 100000, currentLang === 'en' ? rawValue : rawValue / 1300]; // Approx conversion for chart consistency
                 const koContractValues = [2500, 5000, 10000, currentLang === 'ko' ? rawValue : rawValue * 1300];
 
                 const valuesForChart = currentLang === 'ko' ? koContractValues : enContractValues;
                 const commissionValues = valuesForChart.map(v => calculateCommission(v));
 
-                const chartLabels = currentLang === 'en' 
+                const chartLabels = currentLang === 'en'
                     ? ['$25k Deal', '$50k Deal', '$100k Deal', content.en.chartYourEstimate]
                     : ['2,500만원 계약', '5,000만원 계약', '1억원 계약', content.ko.chartYourEstimate];
 
                 if (commissionChart) {
                     commissionChart.destroy();
                 }
-                
+
                 commissionChart = new Chart(commissionChartCanvas, {
                     type: 'bar',
                     data: {
